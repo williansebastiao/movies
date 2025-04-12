@@ -33,7 +33,7 @@ pre-commit = "^4.2.0"
 [tool.black]
 line-length = 79
 include = 'app/'
-exclude = "migrations/"
+exclude = "migrations/*"
 extend-exclude = '''
 /(__pycache__|.*\.pyc)$
 '''

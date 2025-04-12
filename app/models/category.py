@@ -1,4 +1,4 @@
-from sqlalchemy import Enum
+from sqlalchemy import Enum, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.enums import CategoryType
@@ -12,4 +12,9 @@ class CategoryModel(BaseModel):
     category: Mapped[Enum] = mapped_column(
         Enum(CategoryType),
         nullable=False,
+    )
+    slug: Mapped[str] = mapped_column(
+        String(120),
+        nullable=False,
+        unique=True,
     )

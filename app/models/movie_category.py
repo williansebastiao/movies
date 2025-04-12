@@ -5,17 +5,17 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.models import BaseModel
 
 
-class RateModel(BaseModel):
+class MovieCategoryModel(BaseModel):
 
-    __tablename__ = "ratings"
+    __tablename__ = "movie_categories"
 
     movie_uuid: Mapped[UUID] = mapped_column(
         ForeignKey("movies.uuid"),
         nullable=False,
         index=True,
     )
-    user_id: Mapped[UUID] = mapped_column(
-        ForeignKey("users.uuid"),
+    category_uuid: Mapped[UUID] = mapped_column(
+        ForeignKey("categories.uuid"),
         nullable=False,
         index=True,
     )

@@ -2,9 +2,10 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 DOCKER_COMPOSE := docker-compose
 DOCKER := docker exec -it movies-app
+DOCKER_DB := docker exec -i movies-db
 POETRY_CMD := poetry run
 
-.PHONY: help scaffold alembic start build stop container migration  migrate pre-commit pre-commit-install pre-commit-update pylint-generate lint test flake black isort autoflake pylint
+.PHONY: help scaffold alembic start build stop container migration  migrate seed pre-commit pre-commit-install pre-commit-update pylint-generate lint test flake black isort autoflake pylint
 
 help:
 	@echo "Movies"
@@ -41,6 +42,9 @@ migration: ## Create a migration
 
 migrate: ## Run migration
 	$(POETRY_CMD) alembic upgrade head
+
+seed: ## Run seed
+	$(DOCKER_DB) psql -U postgres -d movies < seeder/data.sql
 
 pre-commit: ## Run pre-commit
 	$(POETRY_CMD) pre-commit run --all-files
