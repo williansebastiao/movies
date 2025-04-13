@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Snappy Debugger",
+            "name": "Movies Debugger",
             "type": "debugpy",
             "request": "attach",
             "connect": {

@@ -1,5 +1,5 @@
 from sqlalchemy import String, Text
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models import BaseModel
 
@@ -20,4 +20,8 @@ class MovieModel(BaseModel):
         String(120),
         nullable=False,
         unique=True,
+    )
+    movie_categories: Mapped["MovieCategoryModel"] = relationship(
+        "MovieCategoryModel",
+        back_populates="movies",
     )
