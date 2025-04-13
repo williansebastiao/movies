@@ -19,15 +19,12 @@ class RateService:
             payload=payload,
         )
 
-        response_movies = []
-        response_movies.append(
-            MovieSchema(
-                uuid=response.uuid,
-                name=response.name,
-                synopsis=response.synopsis,
-                slug=response.slug,
-                category=response.movie_categories.categories.category,
-            )
+        response_movies = MovieSchema(
+            uuid=response.uuid,
+            name=response.name,
+            synopsis=response.synopsis,
+            slug=response.slug,
+            category=response.movie_categories.categories.category,
         )
 
         return response_movies

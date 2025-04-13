@@ -1,4 +1,3 @@
-ç
 # Movies
 
 Este projeto tem como objetivo desenvolver uma solução eficiente de recomendação de filmes.
