@@ -60,6 +60,7 @@ async def rate(payload: RateCreateSchema, db=Depends(db_session)):
 
 @router.get(
     "/{user_uuid}/recomendation",
+    response_model=List[MovieSchema],
     status_code=status.HTTP_200_OK,
 )
 async def recomendation(user_uuid: UUID, db=Depends(db_session)):
