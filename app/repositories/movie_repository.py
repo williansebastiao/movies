@@ -14,6 +14,7 @@ class MovieRepository:
                 .join(MovieModel.movie_categories)
                 .join(MovieCategoryModel.categories)
                 .order_by(CategoryModel.category.asc())
+                .order_by(MovieModel.name.asc())
             )
 
             response = db.scalars(stmt).all()

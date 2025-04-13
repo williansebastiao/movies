@@ -14,7 +14,7 @@ class BaseModel(Base):
 
     uuid: Mapped[UUID] = mapped_column(
         UUID(as_uuid=True),
-        default=lambda: str(puuid.uuid4),
+        default=lambda: str(puuid.uuid4()),
         primary_key=True,
         index=True,
     )

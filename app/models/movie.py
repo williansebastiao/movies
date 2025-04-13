@@ -25,3 +25,7 @@ class MovieModel(BaseModel):
         "MovieCategoryModel",
         back_populates="movies",
     )
+    ratings: Mapped["RateModel"] = relationship(
+        "RateModel",
+        back_populates="movies",
+    )

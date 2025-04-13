@@ -38,10 +38,10 @@ container: ## Enter the container
 	$(DOCKER) bash
 
 migration: ## Create a migration
-	$(POETRY_CMD) alembic revision --autogenerate -m "$(message)"
+	$(DOCKER) $(POETRY_CMD) alembic revision --autogenerate -m "$(message)"
 
 migrate: ## Run migration
-	$(POETRY_CMD) alembic upgrade head
+	$(DOCKER) $(POETRY_CMD) alembic upgrade head
 
 seed: ## Run seed
 	$(DOCKER_DB) psql -U postgres -d movies < seeder/data.sql

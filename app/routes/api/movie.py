@@ -2,12 +2,11 @@ from typing import List
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.responses import JSONResponse
 
 from app.database import db_session
 from app.exceptions import RepositoryException
-from app.schemas import MovieSchema
-from app.services import MovieService
+from app.schemas import MovieSchema, RateCreateSchema
+from app.services import MovieService, RateService
 
 router = APIRouter(prefix="/movie", tags=["Movie"])
 
@@ -35,24 +34,49 @@ async def find_all(db=Depends(db_session)):
 
 
 @router.post(
-    "/{movie_uuid}/rate",
-    status_code=status.HTTP_200_OK,
+    "/rate",
+    response_model=MovieSchema,
+    status_code=status.HTTP_201_CREATED,
 )
-async def rate(movie_uuid: UUID):
-    print(movie_uuid)
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={"message": "Ok"},
-    )
+async def rate(payload: RateCreateSchema, db=Depends(db_session)):
+    try:
+        rate_service = RateService()
+        response = await rate_service.rate(
+            db=db,
+            payload=payload,
+        )
+        return response
+    except RepositoryException as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e),
+        ) from e
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e),
+        ) from e
 
 
-@router.post(
+@router.get(
     "/{user_uuid}/recomendation",
     status_code=status.HTTP_200_OK,
 )
-async def recomendation(user_uuid: UUID):
-    print(user_uuid)
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={"message": "Ok"},
-    )
+async def recomendation(user_uuid: UUID, db=Depends(db_session)):
+    try:
+        rate_service = RateService()
+        response = await rate_service.find_recomendation_by_user_uuid(
+            db=db,
+            user_uuid=user_uuid,
+        )
+        return response
+    except RepositoryException as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e),
+        ) from e
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e),
+        ) from e
